@@ -101,7 +101,7 @@ analytics:
 # Site Author
 author:
   name             : "Vishal Kumar"
-  avatar           : "\images\bio.jpeg"
+  avatar           : "\images\bio.jpg"
   bio              : "Data Science Portfolio"
   location         : "Delhi, India"
   email            : "statvishal@gmail.com"
