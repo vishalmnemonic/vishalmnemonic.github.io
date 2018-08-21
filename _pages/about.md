@@ -1,8 +1,8 @@
 ---
-title: "About"
-permalink: /about/
+  title: "About Me"
+  permalink: /about/
   header:
-    image: "/image/bio.jpg"
+    image: "/images/site.jpeg"
 ---
 
 I'm a Senior Business Analyst at EXL.
