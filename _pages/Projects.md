@@ -1,10 +1,10 @@
 ---
-layout: archive
-permalink: /Projects/
-title: "Posts by me"
-author_profile: true
-header
-  image:
+  layout: archive
+  permalink: /Projects/
+  title: "Posts by me"
+  author_profile: true
+  header
+    image:
 ---
 
 {% include base_path %}
