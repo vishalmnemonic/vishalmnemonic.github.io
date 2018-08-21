@@ -4,7 +4,7 @@
   title: "Posts by me"
   author_profile: true
   header:
-    image:
+    image: "/images/site.jpeg"
 ---
 
 {% include base_path %}
