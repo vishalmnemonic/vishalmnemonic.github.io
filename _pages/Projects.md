@@ -3,7 +3,7 @@
   permalink: /Projects/
   title: "Posts by me"
   author_profile: true
-  header
+  header:
     image:
 ---
 
