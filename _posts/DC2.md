@@ -420,3 +420,205 @@ cars.index = row_labels
 
 # Print cars again
 print(cars)
+
+CSV to DataFrame (1)
+Putting data in a dictionary and then building a DataFrame works, but it's not very efficient. What if you're dealing with millions of observations? In those cases, the data is typically available as files with a regular structure. One of those file types is the CSV file, which is short for "comma-separated values".
+
+To import CSV data into Python as a Pandas DataFrame you can use read_csv().
+
+Let's explore this function with the same cars data from the previous exercises. This time, however, the data is available in a CSV file, named cars.csv. It is available in your current working directory, so the path to the file is simply 'cars.csv'.
+
+# Import pandas as pd
+import pandas as pd
+
+# Import the cars.csv data: cars
+cars= pd.read_csv("cars.csv")
+
+# Print out cars
+print(cars)
+
+CSV to DataFrame (2)
+Your read_csv() call to import the CSV data didn't generate an error, but the output is not entirely what we wanted. The row labels were imported as another column without a name.
+
+Remember index_col, an argument of read_csv(), that you can use to specify which column in the CSV file should be used as a row label? Well, that's exactly what you need here!
+
+Python code that solves the previous exercise is already included; can you make the appropriate changes to fix the data import?
+
+# Import pandas as pd
+import pandas as pd
+
+# Fix import by including index_col
+cars = pd.read_csv('cars.csv',index_col=0)
+
+# Print out cars
+print(cars)
+
+Square Brackets (1)
+In the video, you saw that you can index and select Pandas DataFrames in many different ways. The simplest, but not the most powerful way, is to use square brackets.
+
+In the sample code on the right, the same cars data is imported from a CSV files as a Pandas DataFrame. To select only the cars_per_cap column from cars, you can use:
+
+cars['cars_per_cap']
+cars[['cars_per_cap']]
+The single bracket version gives a Pandas Series, the double bracket version gives a Pandas DataFrame.
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Print out country column as Pandas Series
+print(cars["country"])
+
+# Print out country column as Pandas DataFrame
+print(cars[["country"]])
+
+# Print out DataFrame with country and drives_right columns
+print(cars[["country","drives_right"]])
+
+Square Brackets (2)
+Square brackets can do more than just selecting columns. You can also use them to get rows, or observations, from a DataFrame. The following call selects the first five rows from the cars DataFrame:
+
+cars[0:5]
+The result is another DataFrame containing only the rows you specified.
+
+Pay attention: You can only select rows using square brackets if you specify a slice, like 0:4. Also, you're using the integer indexes of the rows here, not the row labels!
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Print out first 3 observations
+print(cars[0:3])
+
+# Print out fourth, fifth and sixth observation
+print(cars[3:6])
+
+loc and iloc (1)
+With loc and iloc you can do practically any data selection operation on DataFrames you can think of. loc is label-based, which means that you have to specify rows and columns based on their row and column labels. iloc is integer index based, so you have to specify rows and columns by their integer index like you did in the previous exercise.
+
+Try out the following commands in the IPython Shell to experiment with loc and iloc to select observations. Each pair of commands here gives the same result.
+
+cars.loc['RU']
+cars.iloc[4]
+
+cars.loc[['RU']]
+cars.iloc[[4]]
+
+cars.loc[['RU', 'AUS']]
+cars.iloc[[4, 1]]
+As before, code is included that imports the cars data as a Pandas DataFrame.
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Print out observation for Japan
+print(cars.loc["JAP",:])
+
+# Print out observations for Australia and Egypt
+print(cars.loc[["AUS","EG"],:])
+
+loc and iloc (2)
+loc and iloc also allow you to select both rows and columns from a DataFrame. To experiment, try out the following commands in the IPython Shell. Again, paired commands produce the same result.
+
+cars.loc['IN', 'cars_per_cap']
+cars.iloc[3, 0]
+
+cars.loc[['IN', 'RU'], 'cars_per_cap']
+cars.iloc[[3, 4], 0]
+
+cars.loc[['IN', 'RU'], ['cars_per_cap', 'country']]
+cars.iloc[[3, 4], [0, 1]]
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Print out drives_right value of Morocco
+print(cars.loc[["MOR"],["drives_right"]])
+
+# Print sub-DataFrame
+print(cars.loc[["RU","MOR"],["country","drives_right"]])
+
+loc and iloc (3)
+It's also possible to select only columns with loc and iloc. In both cases, you simply put a slice going from beginning to end in front of the comma:
+
+cars.loc[:, 'country']
+cars.iloc[:, 1]
+
+cars.loc[:, ['country','drives_right']]
+cars.iloc[:, [1, 2]]
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Print out drives_right column as Series
+print(cars.loc[:,"drives_right"])
+
+# Print out drives_right column as DataFrame
+print(cars.loc[:,["drives_right"]])
+
+# Print out cars_per_cap and drives_right as DataFrame
+print(cars.loc[:,["cars_per_cap","drives_right"]])
+
+Equality
+To check if two Python values, or variables, are equal you can use ==. To check for inequality, you need !=. As a refresher, have a look at the following examples that all result in True. Feel free to try them out in the IPython Shell.
+
+2 == (1 + 1)
+"intermediate" != "python"
+True != False
+"Python" != "python"
+When you write these comparisons in a script, you will need to wrap a print() function around them to see the output.
+
+# Comparison of booleans
+print(True == False)
+
+# Comparison of integers
+
+print((-5 * 15)!=75)
+
+# Comparison of strings
+
+print("pyscript" == "PyScript")
+
+# Compare a boolean with an integer
+
+print(True==1)
+
+Greater and less than
+In the video, Filip also talked about the less than and greater than signs, < and > in Python. You can combine them with an equals sign: <= and >=. Pay attention: <= is valid syntax, but =< is not.
+
+All Python expressions in the following code chunk evaluate to True:
+
+3 < 4
+3 <= 4
+"alpha" <= "beta"
+Remember that for string comparison, Python determines the relationship based on alphabetical order.
+
+# Comparison of integers
+x = -3 * 6
+print(x>=-10 )
+
+# Comparison of strings
+y = "test"
+print("test" <=y)
+
+# Comparison of booleans
+print(True > False)
+
+Compare arrays
+Out of the box, you can also use comparison operators with Numpy arrays.
+
+Remember areas, the list of area measurements for different rooms in your house from the previous course? This time there's two Numpy arrays: my_house and your_house. They both contain the areas for the kitchen, living room, bedroom and bathroom in the same order, so you can compare them.
+
+# Create arrays
+import numpy as np
+my_house = np.array([18.0, 20.0, 10.75, 9.50])
+your_house = np.array([14.0, 24.0, 14.25, 9.0])
+
+# my_house greater than or equal to 18
+print(my_house[my_house>=18])
+
+# my_house less than your_house
+print(my_house[my_house<your_house])
