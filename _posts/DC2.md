@@ -622,3 +622,396 @@ print(my_house[my_house>=18])
 
 # my_house less than your_house
 print(my_house[my_house<your_house])
+
+and, or, not (1)
+A boolean is either 1 or 0, True or False. With boolean operators such as and, or and not, you can combine these booleans to perform more advanced queries on your data.
+
+In the sample code on the right, two variables are defined: my_kitchen and your_kitchen, representing areas.
+
+# Define variables
+my_kitchen = 18.0
+your_kitchen = 14.0
+
+# my_kitchen bigger than 10 and smaller than 18?
+print(my_kitchen>10 and my_kitchen<18)
+
+# my_kitchen smaller than 14 or bigger than 17?
+print(my_kitchen<14 or my_kitchen>17)
+
+# Double my_kitchen smaller than triple your_kitchen?
+print(2*my_kitchen<3*your_kitchen)
+
+Boolean operators with Numpy
+Before, the operational operators like < and >= worked with Numpy arrays out of the box. Unfortunately, this is not true for the boolean operators and, or, and not.
+
+To use these operators with Numpy, you will need np.logical_and(), np.logical_or() and np.logical_not(). Here's an example on the my_house and your_house arrays from before to give you an idea:
+
+np.logical_and(your_house > 13,
+               your_house < 15)
+
+               # Create arrays
+               import numpy as np
+               my_house = np.array([18.0, 20.0, 10.75, 9.50])
+               your_house = np.array([14.0, 24.0, 14.25, 9.0])
+
+               # my_house greater than 18.5 or smaller than 10
+               print(np.logical_or(my_house>18.5,my_house<10))
+
+               # Both my_house and your_house smaller than 11
+               print(np.logical_and(my_house<11,your_house<11))
+if
+It's time to take a closer look around in your house.
+
+Two variables are defined in the sample code: room, a string that tells you which room of the house we're looking at, and area, the area of that room.
+
+# Define variables
+room = "kit"
+area = 14.0
+
+# if statement for room
+if room == "kit" :
+    print("looking around in the kitchen.")
+
+# if statement for area
+if area>15:
+    print("big place!")
+
+    Add else
+    On the right, the if construct for room has been extended with an else statement so that "looking around elsewhere." is printed if the condition room == "kit" evaluates to False.
+
+    Can you do a similar thing to add more functionality to the if construct for area?
+
+# Define variables
+room = "kit"
+area = 14.0
+# if-else construct for room
+if room == "kit" :
+    print("looking around in the kitchen.")
+    else :
+        print("looking around elsewhere.")
+
+# if-else construct for area
+    if area > 15 :
+        print("big place!")
+    else:
+        print("pretty small.")
+
+Customize further: elif
+It's also possible to have a look around in the bedroom. The sample code contains an elif part that checks if room equals "bed". In that case, "looking around in the bedroom." is printed out.
+
+It's up to you now! Make a similar addition to the second control structure to further customize the messages for different values of area.
+
+# Define variables
+room = "bed"
+area = 14.0
+
+# if-elif-else construct for room
+if room == "kit" :
+    print("looking around in the kitchen.")
+elif room == "bed":
+    print("looking around in the bedroom.")
+else :
+    print("looking around elsewhere.")
+
+# if-elif-else construct for area
+if area > 15 :
+    print("big place!")
+elif area >10:
+    print("medium size,nice!")
+else :
+    print("pretty small.")
+
+rrtr
+
+Driving right (1)
+Remember that cars dataset, containing the cars per 1000 people (cars_per_cap) and whether people drive right (drives_right) for different countries (country)? The code that imports this data in CSV format into Python as a DataFrame is available on the right.
+
+In the video, you saw a step-by-step approach to filter observations from a DataFrame based on boolean arrays. Let's start simple and try to find all observations in cars where drives_right is True.
+
+drives_right is a boolean column, so you'll have to extract it as a Series and then use this boolean Series to select observations from cars.
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Extract drives_right column as Series: dr
+dr= cars["drives_right"]
+
+# Use dr to subset cars: sel
+sel = cars[dr]
+
+# Print sel
+print(sel)
+
+Driving right (2)
+The code in the previous example worked fine, but you actually unnecessarily created a new variable dr. You can achieve the same result without this intermediate variable. Put the code that computes dr straight into the square brackets that select observations from cars.
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Convert code to a one-liner
+sel = cars[cars['drives_right']]
+
+
+# Print sel
+print(sel)
+
+Cars per capita (1)
+Let's stick to the cars data some more. This time you want to find out which countries have a high cars per capita figure. In other words, in which countries do many people have a car, or maybe multiple cars.
+
+Similar to the previous example, you'll want to build up a boolean Series, that you can then use to subset the cars DataFrame to select certain observations. If you want to do this in a one-liner, that's perfectly fine!
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Create car_maniac: observations that have a cars_per_cap over 500
+cpc = cars['cars_per_cap']
+many_cars= cpc>500
+car_maniac = cars[many_cars]
+# Print car_maniac
+print(car_maniac)
+
+Cars per capita (2)
+Remember about np.logical_and(), np.logical_or() and np.logical_not(), the Numpy variants of the and, or and not operators? You can also use them on Pandas Series to do more advanced filtering operations.
+
+Take this example that selects the observations that have a cars_per_cap between 10 and 80. Try out these lines of code step by step to see what's happening.
+
+cpc = cars['cars_per_cap']
+between = np.logical_and(cpc > 10, cpc < 80)
+medium = cars[between]
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Import numpy, you'll need this
+import numpy as np
+
+# Create medium: observations with cars_per_cap between 100 and 500
+between = np.logical_and(cars["cars_per_cap"]>100,cars["cars_per_cap"]<500)
+medium = cars[between]
+
+
+# Print medium
+print(medium)
+
+# 4. Loops
+
+Basic while loop
+Below you can find the example from the video where the error variable, initially equal to 50.0, is divided by 4 and printed out on every run:
+
+error = 50.0
+while error > 1 :
+    error = error / 4
+    print(error)
+This example will come in handy, because it's time to build a while loop yourself! We're going to code a while loop that implements a very basic control system for an inverted pendulum. If there's an offset from standing perfectly straight, the while loop will incrementally fix this offset.
+
+# Initialize offset
+offset = 8
+
+# Code the while loop
+while offset!=0:
+    print("correcting...")
+    offset = offset-1
+    print(offset)
+aa
+
+Add conditionals
+The while loop that corrects the offset is a good start, but what if offset is negative? You can try to run the sample code on the right where offset is initialized to -6, but your sessions will be disconnected. The while loop will never stop running, because offset will be further decreased on every run. offset != 0 will never become False and the while loop continues forever.
+
+Fix things by putting an if-else statement inside the while loop.
+
+# Initialize offset
+offset = -6
+
+# Code the while loop
+while offset != 0 :
+    print("correcting...")
+    if(offset>0):
+                 offset = offset - 1
+    else:
+         offset=offset+1    
+    print(offset)
+aa
+
+Loop over a list
+Have another look at the for loop that Filip showed in the video:
+
+fam = [1.73, 1.68, 1.71, 1.89]
+for height in fam :
+    print(height)
+As usual, you simply have to indent the code with 4 spaces to tell Python which code should be executed in the for loop.
+
+The areas variable, containing the area of different rooms in your house, is already defined.
+
+# areas list
+areas = [11.25, 18.0, 20.0, 10.75, 9.50]
+
+# Code the for loop
+for height in areas:
+    print(height)
+
+qq
+
+Indexes and values (1)
+Using a for loop to iterate over a list only gives you access to every list element in each run, one after the other. If you also want to access the index information, so where the list element you're iterating over is located, you can use enumerate().
+
+As an example, have a look at how the for loop from the video was converted:
+
+fam = [1.73, 1.68, 1.71, 1.89]
+for index, height in enumerate(fam) :
+    print("person " + str(index) + ": " + str(height))
+q
+# areas list
+areas = [11.25, 18.0, 20.0, 10.75, 9.50]
+
+# Change for loop to use enumerate()
+for x,a in enumerate(areas) :
+    print("room "+str(x)+": "+str(a))
+q
+
+Indexes and values (2)
+For non-programmer folks, room 0: 11.25 is strange. Wouldn't it be better if the count started at 1?
+
+# areas list
+areas = [11.25, 18.0, 20.0, 10.75, 9.50]
+
+# Code the for loop
+for index, area in enumerate(areas) :
+    print("room " + str(index+1) + ": " + str(area))
+q
+
+Loop over list of lists
+Remember the house variable from the Intro to Python course? Have a look at its definition on the right. It's basically a list of lists, where each sublist contains the name and area of a room in your house.
+
+It's up to you to build a for loop from scratch this time!
+
+# house list of lists
+house = [["hallway", 11.25],
+         ["kitchen", 18.0],
+         ["living room", 20.0],
+         ["bedroom", 10.75],
+         ["bathroom", 9.50]]
+
+# Build a for loop from scratch
+for x in house:
+     print("the "+str(x[0])+" is "+str(x[1])+" sqm")
+q
+
+Loop over dictionary
+In Python 3, you need the items() method to loop over a dictionary:
+
+world = { "afghanistan":30.55,
+          "albania":2.77,
+          "algeria":39.21 }
+
+for key, value in world.items() :
+    print(key + " -- " + str(value))
+Remember the europe dictionary that contained the names of some European countries as key and their capitals as corresponding value? Go ahead and write a loop to iterate over it!
+
+# Definition of dictionary
+europe = {'spain':'madrid', 'france':'paris', 'germany':'bonn',
+          'norway':'oslo', 'italy':'rome', 'poland':'warsaw', 'australia':'vienna' }
+
+# Iterate over europe
+for key,value in europe.items():
+    print("the capital of "+key+" is "+ value)
+a
+
+Loop over Numpy array
+If you're dealing with a 1D Numpy array, looping over all elements can be as simple as:
+
+for x in my_array :
+    ...
+If you're dealing with a 2D Numpy array, it's more complicated. A 2D array is built up of multiple 1D arrays. To explicitly iterate over all separate elements of a multi-dimensional array, you'll need this syntax:
+
+for x in np.nditer(my_array) :
+    ...
+Two Numpy arrays that you might recognize from the intro course are available in your Python session: np_height, a Numpy array containing the heights of Major League Baseball players, and np_baseball, a 2D Numpy array that contains both the heights (first column) and weights (second column) of those players.
+
+# Import numpy as np
+import numpy as np
+
+# For loop over np_height
+for x in np_height:
+    print(str(x)+" inches")
+
+
+# For loop over np_baseball
+for x in np.nditer(np_baseball):
+    print(str(x))
+a
+
+Loop over DataFrame (1)
+Iterating over a Pandas DataFrame is typically done with the iterrows() method. Used in a for loop, every observation is iterated over and on every iteration the row label and actual row contents are available:
+
+for lab, row in brics.iterrows() :
+    ...
+In this and the following exercises you will be working on the cars DataFrame. It contains information on the cars per capita and whether people drive right or left for seven countries in the world.
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Iterate over rows of cars
+for key,value in cars.iterrows():
+    print(key)
+    print(value)
+a
+
+Loop over DataFrame (2)
+The row data that's generated by iterrows() on every run is a Pandas Series. This format is not very convenient to print out. Luckily, you can easily select variables from the Pandas Series using square brackets:
+
+for lab, row in brics.iterrows() :
+    print(row['country'])
+
+    # Import cars data
+    import pandas as pd
+    cars = pd.read_csv('cars.csv', index_col = 0)
+
+    # Adapt for loop
+    for lab,row in cars.iterrows():
+        print(lab +": "+ str(row['cars_per_cap']))
+
+a
+
+Add column (1)
+In the video, Filip showed you how to add the length of the country names of the brics DataFrame in a new column:
+
+for lab, row in brics.iterrows() :
+    brics.loc[lab, "name_length"] = len(row["country"])
+You can do similar things on the cars DataFrame.
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Code for loop that adds COUNTRY column
+for lab,row in cars.iterrows():
+    cars.loc[lab, "COUNTRY"] = row["country"].upper()
+
+# Print cars
+print(cars)
+
+Add column (2)
+Using iterrows() to iterate over every observation of a Pandas DataFrame is easy to understand, but not very efficient. On every iteration, you're creating a new Pandas Series.
+
+If you want to add a column to a DataFrame by calling a function on another column, the iterrows() method in combination with a for loop is not the preferred way to go. Instead, you'll want to use apply().
+
+Compare the iterrows() version with the apply() version to get the same result in the brics DataFrame:
+
+for lab, row in brics.iterrows() :
+    brics.loc[lab, "name_length"] = len(row["country"])
+
+brics["name_length"] = brics["country"].apply(len)
+We can do a similar thing to call the upper() method on every name in the country column. However, upper() is a method, so we'll need a slightly different approach:
+
+# Import cars data
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Use .apply(str.upper)
+cars["COUNTRY"] = cars["country"].apply(str.upper)
+print(cars)
