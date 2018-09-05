@@ -1,3 +1,14 @@
+def do_stuff():
+    """
+    Example of print vs. return
+    """
+    print("Hello world")
+    return "Is it over yet?"
+    print("Goodbye cruel world!")
+
+print(do_stuff())
+
+
 Line plot (1)
 With matplotlib, you can create a bunch of different plots in Python. The most basic plot is the line plot. A general recipe is given here.
 
